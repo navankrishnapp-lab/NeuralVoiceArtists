@@ -1,0 +1,272 @@
+/* style.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", Times, serif;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Page wrapper to align header to the left while keeping container centered */
+.page-wrapper {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.container {
+    background-color: #000000;
+    border: 1px solid #00d2ff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 900px;
+    padding: 24px;
+}
+
+/* App Header Branding Area - Snapped to the Left Corner */
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    width: 100%;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+.logo-container {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #00d2ff;
+}
+
+.ai-core-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.main-title {
+    font-size: 1.4rem;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.sub-title {
+    font-size: 0.9rem;
+    color: #00d2ff;
+    font-style: italic;
+    border-bottom: 1px solid #00d2ff;
+    padding-bottom: 2px;
+    display: inline-block;
+}
+
+/* Two-column layout */
+.layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 1rem;
+    color: #00d2ff;
+    font-weight: bold;
+}
+
+/* Custom Dropdown Styling */
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    background-color: #000000;
+    border: 1px solid #00d2ff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-selected {
+    padding: 10px 14px;
+    font-size: 1rem;
+    color: #ffffff;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    border: 1px solid #00d2ff;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 100;
+}
+
+.custom-dropdown.open .dropdown-menu {
+    display: block;
+}
+
+.dropdown-options {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.dropdown-option {
+    padding: 10px 14px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.dropdown-option:hover,
+.dropdown-option:focus {
+    background-color: #00d2ff;
+    color: #000000;
+    outline: none;
+}
+
+/* Text Inputs & Textareas */
+input[type="text"], textarea {
+    width: 100%;
+    background-color: #000000;
+    border: 1px solid #00d2ff;
+    border-radius: 4px;
+    padding: 10px 14px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    font-family: "Times New Roman", Times, serif;
+}
+
+textarea {
+    resize: none;
+    min-height: 180px;
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #00d2ff;
+}
+
+.char-count {
+    color: #aaaaaa;
+}
+
+.controls-row {
+    margin-bottom: 16px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+    color: #ffffff;
+}
+
+.checkbox-container input {
+    margin-right: 10px;
+    accent-color: #00d2ff;
+    width: 16px;
+    height: 16px;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.neon-btn {
+    flex: 1;
+    background-color: #000000;
+    border: 1px solid #00d2ff;
+    color: #00d2ff;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Times New Roman", Times, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.neon-btn:hover {
+    background-color: #00d2ff;
+    color: #000000;
+}
+
+/* Specific styling for the icon-only download button */
+.icon-only-btn {
+    flex: 0 0 46px;
+    height: 46px;
+    padding: 0;
+}
+
+.icon-only-btn svg {
+    stroke: #00d2ff;
+}
+
+.icon-only-btn:hover svg {
+    stroke: #000000;
+}
+
+/* Accessibility screen-reader only class */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

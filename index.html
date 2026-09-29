@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Voice Artists</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Top Header Branding Area (Moved Outside the Main Container) -->
+        <header class="app-header">
+            <div class="logo-container">
+                <video src="aicore.mp4" autoplay loop muted playsinline class="ai-core-video"></video>
+            </div>
+            <div class="title-container">
+                <h1 class="main-title">Neural Voice Artists</h1>
+                <p class="sub-title">Developed by Navan Krishna</p>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="layout-grid">
+                <!-- Left Column: Voice Selection and File Title -->
+                <div class="column">
+                    <!-- Voice Character Selection -->
+                    <div class="input-group">
+                        <label id="voice-label">Select AI Voice Artist</label>
+                        <div class="custom-dropdown" id="customDropdown">
+                            <button type="button" 
+                                    class="dropdown-selected" 
+                                    id="dropdownSelected" 
+                                    aria-haspopup="listbox" 
+                                    aria-expanded="false" 
+                                    aria-controls="dropdownOptions"
+                                    aria-labelledby="voice-label dropdownSelected">
+                                Aria - English (Female, US)
+                            </button>
+                            <div class="dropdown-menu" id="dropdownMenu">
+                                <div class="dropdown-options" id="dropdownOptions" role="listbox" aria-labelledby="voice-label">
+                                    <!-- Populated dynamically via script.js -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hidden input to hold selected voice value -->
+                        <input type="hidden" id="selectedVoiceValue" value="en-US-AriaNeural">
+                    </div>
+
+                    <!-- File Title -->
+                    <div class="input-group">
+                        <label for="fileTitle">File Title</label>
+                        <input type="text" id="fileTitle" placeholder="Enter a title (e.g., chapter_1)">
+                    </div>
+                </div>
+
+                <!-- Right Column: Text Input, Controls, and Actions -->
+                <div class="column">
+                    <!-- Text Input Box -->
+                    <div class="input-group">
+                        <div class="tab-header">
+                            <span class="active-tab">Type</span>
+                            <span class="char-count" id="charCount" aria-live="polite">0 / 500,000</span>
+                        </div>
+                        <label for="textInput" class="sr-only">Enter or paste your text here</label>
+                        <textarea id="textInput" placeholder="Enter or paste your text here..."></textarea>
+                    </div>
+
+                    <!-- Options & Controls -->
+                    <div class="controls-row">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="autoplayCheckbox" checked>
+                            <span class="checkmark"></span>
+                            Auto-play
+                        </label>
+                    </div>
+
+                    <!-- Action Buttons & Download Icon Button -->
+                    <div class="button-row">
+                        <button id="readAlongBtn" class="neon-btn" type="button">Read Along</button>
+                        <button id="generateBtn" class="neon-btn" type="button">Generate Speech</button>
+                        <button id="downloadBtn" class="neon-btn icon-only-btn" type="button" aria-label="Download audio file" title="Download audio file">
+                            <!-- Download SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Audio Player and Screen Reader Live Announcer -->
+            <audio id="audioPlayer" style="display: none;"></audio>
+            <div id="srAnnouncer" class="sr-only" aria-live="polite"></div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
