@@ -1,16 +1,331 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neural Voice Artists</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px 28px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -50px;
+            left: 16px;
+            background-color: #00d2ff;
+            color: #000000;
+            padding: 10px 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            top: 16px;
+            outline: 2px solid #ffffff;
+            outline-offset: 2px;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible {
+            outline: 2px solid #ffffff;
+            outline-offset: 2px;
+            box-shadow: 0 0 10px #00d2ff;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 14px;
+            width: 100%;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.35);
+            margin-bottom: auto;
+        }
+
+        .logo-container {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid #00d2ff;
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.65), inset 0 0 8px rgba(0, 210, 255, 0.45);
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.25) 0%, #000000 75%);
+            position: relative;
+        }
+
+        .ai-core-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .main-title {
+            font-size: 1.55rem;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .sub-title {
+            font-size: 0.92rem;
+            color: #00d2ff;
+            font-style: italic;
+            border-bottom: 1px solid #00d2ff;
+            padding-bottom: 2px;
+            margin-top: 2px;
+            display: inline-block;
+            text-shadow: 0 0 6px rgba(0, 210, 255, 0.4);
+        }
+
+        .main-center-area {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto 0;
+            padding: 24px 0;
+        }
+
+        /* Main outline removed as requested */
+        .container {
+            background-color: #000000;
+            border: none;
+            box-shadow: none;
+            width: 100%;
+            max-width: 960px;
+            padding: 12px 0;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        @media (max-width: 768px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.02rem;
+            color: #00d2ff;
+            font-weight: bold;
+        }
+
+        /* Native Accessible Select for Seamless NVDA Focus & Browse Mode */
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00d2ff;
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        select {
+            width: 100%;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #000000;
+            border: 1px solid #00d2ff;
+            border-radius: 4px;
+            padding: 11px 38px 11px 14px;
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 210, 255, 0.15);
+        }
+
+        select option {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            background-color: #000000;
+            border: 1px solid #00d2ff;
+            border-radius: 4px;
+            padding: 11px 14px;
+            color: #ffffff;
+            font-size: 1rem;
+            box-shadow: 0 0 8px rgba(0, 210, 255, 0.15);
+        }
+
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: #777777;
+        }
+
+        textarea {
+            resize: none;
+            min-height: 210px;
+            line-height: 1.45;
+        }
+
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .tab-header label {
+            margin-bottom: 0;
+        }
+
+        .char-count {
+            color: #00d2ff;
+            font-size: 0.92rem;
+            letter-spacing: 0.3px;
+        }
+
+        .controls-row {
+            margin-bottom: 18px;
+        }
+
+        .checkbox-container {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1rem;
+            user-select: none;
+            color: #ffffff;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #00d2ff;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .neon-btn {
+            flex: 1;
+            background-color: #000000;
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            padding: 11px 14px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 8px rgba(0, 210, 255, 0.2);
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .neon-btn:hover:not(:disabled) {
+            background-color: #00d2ff;
+            color: #000000;
+            box-shadow: 0 0 14px rgba(0, 210, 255, 0.75);
+        }
+
+        .neon-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .icon-only-btn {
+            flex: 0 0 46px;
+            height: 45px;
+            padding: 0;
+        }
+
+        .icon-only-btn svg {
+            stroke: #00d2ff;
+        }
+
+        .icon-only-btn:hover:not(:disabled) svg {
+            stroke: #000000;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
 </head>
 <body>
+    <a href="#main-studio" class="skip-link">Skip to Neural Voice Artists Studio</a>
+
     <div class="page-wrapper">
-        <!-- Top Header Branding Area (Moved Outside the Main Container) -->
         <header class="app-header">
-            <div class="logo-container">
+            <div class="logo-container" aria-hidden="true">
                 <video src="aicore.mp4" autoplay loop muted playsinline class="ai-core-video"></video>
             </div>
             <div class="title-container">
@@ -19,83 +334,285 @@
             </div>
         </header>
 
-        <main class="container">
-            <div class="layout-grid">
-                <!-- Left Column: Voice Selection and File Title -->
-                <div class="column">
-                    <!-- Voice Character Selection -->
-                    <div class="input-group">
-                        <label id="voice-label">Select AI Voice Artist</label>
-                        <div class="custom-dropdown" id="customDropdown">
-                            <button type="button" 
-                                    class="dropdown-selected" 
-                                    id="dropdownSelected" 
-                                    aria-haspopup="listbox" 
-                                    aria-expanded="false" 
-                                    aria-controls="dropdownOptions"
-                                    aria-labelledby="voice-label dropdownSelected">
-                                Aria - English (Female, US)
-                            </button>
-                            <div class="dropdown-menu" id="dropdownMenu">
-                                <div class="dropdown-options" id="dropdownOptions" role="listbox" aria-labelledby="voice-label">
-                                    <!-- Populated dynamically via script.js -->
-                                </div>
+        <div class="main-center-area">
+            <main id="main-studio" class="container" aria-label="Neural Voice Artists Studio">
+                <div class="layout-grid">
+                    <div class="column">
+                        <div class="input-group">
+                            <label for="languageSelect">Select Languages</label>
+                            <div class="select-wrapper">
+                                <select id="languageSelect" name="languageSelect" aria-label="Select Languages">
+                                    <option value="en-US" data-tld="com">English (United States)</option>
+                                    <option value="en-GB" data-tld="co.uk">English (United Kingdom)</option>
+                                    <option value="en-IN" data-tld="co.in">English (India)</option>
+                                    <option value="en-AU" data-tld="com.au">English (Australia)</option>
+                                    <option value="ml" data-tld="co.in">Malayalam (India)</option>
+                                    <option value="hi" data-tld="co.in">Hindi (India)</option>
+                                    <option value="ta" data-tld="co.in">Tamil (India)</option>
+                                    <option value="te" data-tld="co.in">Telugu (India)</option>
+                                    <option value="kn" data-tld="co.in">Kannada (India)</option>
+                                    <option value="bn" data-tld="co.in">Bengali (India)</option>
+                                    <option value="mr" data-tld="co.in">Marathi (India)</option>
+                                    <option value="gu" data-tld="co.in">Gujarati (India)</option>
+                                    <option value="fr" data-tld="fr">French (France)</option>
+                                    <option value="es" data-tld="es">Spanish (Spain)</option>
+                                    <option value="de" data-tld="de">German (Germany)</option>
+                                    <option value="ar" data-tld="com">Arabic</option>
+                                    <option value="ja" data-tld="co.jp">Japanese (Japan)</option>
+                                    <option value="ko" data-tld="co.kr">Korean (South Korea)</option>
+                                    <option value="zh-CN" data-tld="com">Chinese (Mandarin)</option>
+                                </select>
                             </div>
                         </div>
-                        <!-- Hidden input to hold selected voice value -->
-                        <input type="hidden" id="selectedVoiceValue" value="en-US-AriaNeural">
-                    </div>
 
-                    <!-- File Title -->
-                    <div class="input-group">
-                        <label for="fileTitle">File Title</label>
-                        <input type="text" id="fileTitle" placeholder="Enter a title (e.g., chapter_1)">
-                    </div>
-                </div>
-
-                <!-- Right Column: Text Input, Controls, and Actions -->
-                <div class="column">
-                    <!-- Text Input Box -->
-                    <div class="input-group">
-                        <div class="tab-header">
-                            <span class="active-tab">Type</span>
-                            <span class="char-count" id="charCount" aria-live="polite">0 / 500,000</span>
+                        <div class="input-group">
+                            <label for="fileTitle">File Title</label>
+                            <input type="text"
+                                   id="fileTitle"
+                                   name="fileTitle"
+                                   placeholder="Enter a title (e.g., chapter_1)"
+                                   aria-describedby="fileTitleHint">
+                            <span id="fileTitleHint" class="sr-only">Enter an optional file title for saving your MP3 audio.</span>
                         </div>
-                        <label for="textInput" class="sr-only">Enter or paste your text here</label>
-                        <textarea id="textInput" placeholder="Enter or paste your text here..."></textarea>
                     </div>
 
-                    <!-- Options & Controls -->
-                    <div class="controls-row">
-                        <label class="checkbox-container">
-                            <input type="checkbox" id="autoplayCheckbox" checked>
-                            <span class="checkmark"></span>
-                            Auto-play
-                        </label>
-                    </div>
+                    <div class="column">
+                        <div class="input-group">
+                            <div class="tab-header">
+                                <label for="textInput">Type</label>
+                                <span class="char-count" id="charCount" aria-live="off">0 chars | 0 words / 500,000</span>
+                            </div>
+                            <textarea id="textInput"
+                                      name="textInput"
+                                      maxlength="500000"
+                                      placeholder="Enter or paste your text here..."
+                                      aria-describedby="charCount"></textarea>
+                        </div>
 
-                    <!-- Action Buttons & Download Icon Button -->
-                    <div class="button-row">
-                        <button id="readAlongBtn" class="neon-btn" type="button">Read Along</button>
-                        <button id="generateBtn" class="neon-btn" type="button">Generate Speech</button>
-                        <button id="downloadBtn" class="neon-btn icon-only-btn" type="button" aria-label="Download audio file" title="Download audio file">
-                            <!-- Download SVG Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="7 10 12 15 17 10"></polyline>
-                                <line x1="12" y1="15" x2="12" y2="3"></line>
-                            </svg>
-                        </button>
+                        <div class="controls-row">
+                            <label class="checkbox-container" for="autoplayCheckbox">
+                                <input type="checkbox" id="autoplayCheckbox" checked>
+                                <span>Auto-play</span>
+                            </label>
+                        </div>
+
+                        <div class="button-row" role="group" aria-label="Audio playback and download controls">
+                            <button id="readAlongBtn"
+                                    class="neon-btn"
+                                    type="button">
+                                Read Along
+                            </button>
+                            <button id="generateBtn"
+                                    class="neon-btn"
+                                    type="button">
+                                Generate Speech
+                            </button>
+                            <button id="downloadBtn"
+                                    class="neon-btn icon-only-btn"
+                                    type="button"
+                                    aria-label="Download generated MP3 audio file"
+                                    title="Download generated MP3 audio file">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="20"
+                                     height="20"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     aria-hidden="true"
+                                     focusable="false">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Hidden Audio Player and Screen Reader Live Announcer -->
-            <audio id="audioPlayer" style="display: none;"></audio>
-            <div id="srAnnouncer" class="sr-only" aria-live="polite"></div>
-        </main>
+                <audio id="audioPlayer" class="sr-only" aria-label="Generated audio player"></audio>
+                <div id="srAnnouncer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+            </main>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSelect = document.getElementById('languageSelect');
+            const textInput = document.getElementById('textInput');
+            const charCount = document.getElementById('charCount');
+            const readAlongBtn = document.getElementById('readAlongBtn');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const autoplayCheckbox = document.getElementById('autoplayCheckbox');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const fileTitle = document.getElementById('fileTitle');
+            const srAnnouncer = document.getElementById('srAnnouncer');
+
+            let currentAudioUrl = null;
+            let lastGeneratedBlob = null;
+
+            function announce(message) {
+                if (srAnnouncer) {
+                    srAnnouncer.textContent = '';
+                    setTimeout(() => {
+                        srAnnouncer.textContent = message;
+                    }, 50);
+                }
+            }
+
+            languageSelect.addEventListener('change', () => {
+                const selectedText = languageSelect.options[languageSelect.selectedIndex].text;
+                announce(`Selected language: ${selectedText}`);
+            });
+
+            textInput.addEventListener('input', () => {
+                const text = textInput.value;
+                const chars = text.length;
+                const trimmed = text.trim();
+                const words = trimmed ? trimmed.split(/\s+/).length : 0;
+                charCount.textContent = `${chars.toLocaleString()} chars | ${words.toLocaleString()} words / 500,000`;
+            });
+
+            audioPlayer.addEventListener('ended', () => {
+                readAlongBtn.textContent = 'Read Along';
+                announce('Audio playback finished.');
+            });
+
+            audioPlayer.addEventListener('pause', () => {
+                if (audioPlayer.ended || audioPlayer.currentTime === 0) {
+                    readAlongBtn.textContent = 'Read Along';
+                }
+            });
+
+            // Read Along button replays the generated audio
+            readAlongBtn.addEventListener('click', async () => {
+                if (!currentAudioUrl || !lastGeneratedBlob) {
+                    announce('No generated audio available. Please click Generate Speech first.');
+                    alert('Please click "Generate Speech" first to generate audio.');
+                    generateBtn.focus();
+                    return;
+                }
+
+                if (!audioPlayer.paused && !audioPlayer.ended) {
+                    audioPlayer.pause();
+                    audioPlayer.currentTime = 0;
+                    readAlongBtn.textContent = 'Read Along';
+                    announce('Audio playback stopped.');
+                    return;
+                }
+
+                try {
+                    audioPlayer.currentTime = 0;
+                    await audioPlayer.play();
+                    readAlongBtn.textContent = 'Stop Audio';
+                    announce('Replaying generated audio.');
+                } catch (error) {
+                    console.error('Playback error:', error);
+                    announce('Error playing generated audio.');
+                }
+            });
+
+            // Generate Speech button creates the audio and only plays automatically if Auto-play is checked
+            generateBtn.addEventListener('click', async () => {
+                const text = textInput.value.trim();
+                const selectedOption = languageSelect.options[languageSelect.selectedIndex];
+                const lang = selectedOption.value;
+                const tld = selectedOption.getAttribute('data-tld') || 'com';
+                const title = fileTitle.value.trim();
+
+                if (!text) {
+                    announce('Error: Please enter text to generate speech.');
+                    alert('Please enter some text to generate speech.');
+                    textInput.focus();
+                    return;
+                }
+
+                // Stop any ongoing playback before generating new audio
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+                readAlongBtn.textContent = 'Read Along';
+
+                try {
+                    generateBtn.textContent = 'Generating...';
+                    generateBtn.disabled = true;
+                    generateBtn.setAttribute('aria-busy', 'true');
+                    announce('Generating speech audio, please wait.');
+
+                    const endpoint = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                        ? 'http://localhost:3000/synthesize'
+                        : '/synthesize';
+
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text, lang, tld, title })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.error || errorData.message || 'Failed to generate speech');
+                    }
+
+                    lastGeneratedBlob = await response.blob();
+
+                    if (currentAudioUrl) {
+                        URL.revokeObjectURL(currentAudioUrl);
+                    }
+
+                    currentAudioUrl = URL.createObjectURL(lastGeneratedBlob);
+                    audioPlayer.src = currentAudioUrl;
+                    audioPlayer.load();
+
+                    if (autoplayCheckbox.checked) {
+                        try {
+                            await audioPlayer.play();
+                            readAlongBtn.textContent = 'Stop Audio';
+                            announce('Speech generated successfully and playing automatically.');
+                        } catch (playError) {
+                            announce('Speech generated successfully. Click Read Along to hear the audio.');
+                        }
+                    } else {
+                        announce('Speech generated successfully. Auto-play is unchecked. Click Read Along to hear the audio.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(`An error occurred: ${error.message}`);
+                    announce(`Error occurred while generating speech: ${error.message}`);
+                } finally {
+                    generateBtn.textContent = 'Generate Speech';
+                    generateBtn.disabled = false;
+                    generateBtn.removeAttribute('aria-busy');
+                }
+            });
+
+            // Download button downloads the generated MP3
+            downloadBtn.addEventListener('click', () => {
+                if (!lastGeneratedBlob) {
+                    announce('Error: No audio generated yet. Please click Generate Speech first.');
+                    alert('Please generate speech first before downloading.');
+                    generateBtn.focus();
+                    return;
+                }
+
+                const title = fileTitle.value.trim();
+                const sanitizedTitle = title ? title.replace(/[^a-z0-9-_]/gi, '_') : 'neural_voice_speech';
+                const filename = `${sanitizedTitle}.mp3`;
+
+                const downloadUrl = URL.createObjectURL(lastGeneratedBlob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+
+                announce(`Downloaded MP3 audio file as ${filename}`);
+            });
+        });
+    </script>
 </body>
 </html>

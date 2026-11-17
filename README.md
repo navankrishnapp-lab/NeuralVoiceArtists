@@ -1,29 +1,35 @@
-Neural Voice Artists
-An accessible, instant text to speech studio built with natural neural voices, crafted specifically for blind and visually impaired students and researchers.
-Overview
-Many students and researchers who are blind or visually impaired rely on turning digital notes and study materials into natural audio. Existing tools often present serious hurdles.
-Imposing strict character paywalls or download limits.
-Requiring cumbersome workflows where text must be moved across multiple apps.
-Failing during large synthesis tasks.
-Interfaces that are inaccessible or broken for screen reader users NVDA, JAWS, VoiceOver.
-Neural Voice Artists solves this by providing a local, completely free, and unrestricted text to speech desktop interface. It is designed from the ground up for high screen reader accessibility, keyboard navigation, and instant natural audio generation without licensing fees or usage caps.
-Key Features
-Built for Screen Readers. Includes ARIA compliant custom controls, live status regions, listbox and option roles, explicit semantic labeling, and clear keyboard focus indicators.
-Full Keyboard Navigation. Full arrow key selection, Enter and Space activation, and Escape handling across the interface.
-Natural AI Neural Voices. High quality regional neural voices from the US, UK, Australia, and India powered by Edge TTS.
-No Character Limits or Subscriptions. Handles large study notes and texts up to 500000 characters per run.
-Instant Local Playback and MP3 Export. Features automatic playback upon synthesis and direct one click export with custom file naming.
-High Contrast Dark Theme. Low visual fatigue, high contrast black and cyan aesthetic with clear layout boundaries.
-Tech Stack
-Frontend. Semantic HTML5, CSS3 with high contrast cyberpunk and minimalist dark mode styling, and Vanilla JavaScript ES6 plus.
-Backend. Node.js and Express.js.
-TTS Engine. edge-tts-universal for Microsoft Edge Neural Voice synthesis.
-Launcher. Windows batch script for one click startup.
-Project Structure
-Neural Voice Artists
-index.html for semantic screen reader friendly markup
-style.css for high contrast styling and layout
-script.js for frontend keyboard navigation, API calls, and audio playback
-server.js for Express backend handling neural TTS streaming
-launcher.bat for one click launch on Windows
-install.txt for dependency installation reference
+`   # Neural Voice Artists
+An accessible, instant text-to-speech studio built with multi-language voice synthesis, crafted specifically for blind and visually impaired students and researchers.
+
+## Overview
+Many students and researchers who are blind or visually impaired rely on turning digital notes and study materials into natural audio. Existing tools often present serious hurdles:
+* Imposing strict character paywalls or download limits.
+* Requiring cumbersome workflows where text must be moved across multiple apps.
+* Failing during large synthesis tasks.
+* Interfaces that are inaccessible or broken for screen reader users (NVDA, JAWS, VoiceOver, TalkBack).
+
+**Neural Voice Artists** solves this by providing a local, completely free, and unrestricted text-to-speech desktop studio. It is designed from the ground up for seamless screen reader Focus Mode and Browse Mode navigation, full keyboard control, and instant audio generation without licensing fees or usage caps.
+
+## Key Features
+* **Built for Screen Readers (NVDA Focus & Browse Mode):** Includes native semantic controls, skip-navigation links, ARIA live status announcements, explicit form labeling, and high-visibility keyboard focus indicators.
+* **Full Keyboard Navigation:** Native dropdown selection, shortcut-friendly controls, and clean tab order across the entire interface without layout clutter.
+* **Multi-Language & Regional Support:** Supports English (US, UK, India, Australia) alongside Indian and international languages including Malayalam, Hindi, Tamil, Telugu, Kannada, Bengali, Marathi, Gujarati, French, Spanish, German, Arabic, Japanese, Korean, and Chinese powered by Google Text-to-Speech (`gTTS`).
+* **No Character Limits or Subscriptions:** Handles large study notes and texts up to 500,000 characters per run with live character and word counting.
+* **Smart Playback & MP3 Export:** Features optional Auto-play upon generation, a **Read Along** replay button for instant listening, and one-click `.mp3` export with custom file naming.
+* **High-Contrast Dark Theme:** Pitch-black (`#000000`) background with glowing neon cyan (`#00d2ff`) accents and a clean borderless workspace for low visual fatigue.
+* **Zero-Config Windows Auto-Launcher:** Double-clicking `launch.bat` automatically checks for Python 3, installs Python and required libraries (`Flask`, `Flask-CORS`, `gTTS`) if missing, starts the local backend, and opens the studio in your default browser.
+
+## Tech Stack
+* **Frontend:** Single-file semantic HTML5, CSS3 (pitch-black `#000000` and neon cyan `#00d2ff` theme), and Vanilla JavaScript (ES6+).
+* **Backend:** Python 3 with Flask and Flask-CORS.
+* **TTS Engine:** `gTTS` (Google Text-to-Speech) for multi-language `.mp3` audio synthesis.
+* **Launcher:** Windows batch script (`launch.bat`) with automatic Python and dependency installation.
+
+## Project Structure
+```text
+NeuralVoiceArtists/
+├── index.html     # All-in-one accessible frontend (HTML, CSS, and JavaScript)
+├── app.py         # Python Flask backend handling gTTS synthesis and MP3 streaming
+├── launch.bat     # One-click Windows auto-installer and launcher script
+├── aicore.mp4     # Animated AI core emblem for the top-left header
+└── README.md      # Project documentation      
